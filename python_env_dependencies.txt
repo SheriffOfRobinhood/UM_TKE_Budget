@@ -1,0 +1,8 @@
+This module depends on following python packages:
+
+numpy: pip install numpy
+matplotlib: pip install matplotlib
+xarray: pip install xarray
+datetime: pip install DateTime
+monc_utils: pip install  git+https://github.com/ParaConUK/monc_utils.git
+Subfilter: pip install  git+https://github.com/ReadingClouds/Subfilter.git
