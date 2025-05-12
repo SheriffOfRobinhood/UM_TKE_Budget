@@ -17,6 +17,7 @@ if 'os' not in sys.modules:
     import os
 import difflib
 import subfilter.filters as filt
+import subfilter.subfilter as sfsf
  
 
 tkeBudget_termNames= tkeBudget_consts.tkeBudget_termNames
@@ -232,7 +233,7 @@ def resol(A):
 
 def resol_DA(DA, broadcast=True):
     if filtOpts["filter_switch"] == True:
-        return sf.filtered_field_calc(DA, filtOpts, filter_global)[0]
+        return sfsf.filtered_field_calc(DA, filtOpts, filter_global)[0]
     if not broadcast:
         return DA.mean(dim=['x_p','y_p'])
     else:
