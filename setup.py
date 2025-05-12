@@ -9,8 +9,6 @@ setup(
     contributors='Peter Clark',
     # Needed to actually package something
     packages=['um_tke_budget', 
-              'um_tke_budget/tkeBudget',
-              'um_tke_budget/tkeBudget_consts',
               ],
     # Needed for dependencies
     install_requires=['numpy', 'scipy', 'dask', 'xarray', 'loguru', 'datetime', 'monc_utils', 'Subfilter'],
