@@ -31,6 +31,8 @@ def alloc_filter(filterInit_opts, otherKwArgDict={}):
     """construct the filter object according to specs in filtOpts."""
     print('initialising filter according to following filter options:')
     print('\t', filterInit_opts, '\n')
+    global filtOpts
+    global filter_global
     filtOpts['filtInit_Opts'] = filterInit_opts
     filtOpts['filter_switch'] = True
     otherKwArgKeys=list(otherKwArgDict.keys())
@@ -40,6 +42,8 @@ def alloc_filter(filterInit_opts, otherKwArgDict={}):
 
 def dealloc_filter():
     """reset global filter and options to default value, turn off the filter switch"""
+    global filtOpts
+    global filter_global
     filter_global = None
     filtOpts=tkeBudget_consts.filter_options
 
