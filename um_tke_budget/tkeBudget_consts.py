@@ -29,7 +29,7 @@ filter_options={
         ## for gaussian and gen_gaussian:
         'sigma': -1, 
         'ndim': 2, 
-        'filter_type': 'running_mean',
+        'filter_name': 'running_mean',
         },
     
     #optional options
