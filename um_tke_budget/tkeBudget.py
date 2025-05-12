@@ -4,6 +4,7 @@ import sys
 from um_tke_budget import tkeBudget_consts
 import numpy as np
 import subfilter.spectra as SBFSpec
+import subfilter as sf
 import xarray as xr
 from monc_utils.io_um.datain import get_um_field, get_um_data, get_um_data_on_grid, get_um_and_transform
 from monc_utils.io_um.datain import stash_map as moncUtils_stashmap
@@ -15,9 +16,31 @@ import datetime
 if 'os' not in sys.modules:
     import os
 import difflib
+import subfilter.filters as filt
  
 
 tkeBudget_termNames= tkeBudget_consts.tkeBudget_termNames
+
+#Note that the following  will be a global variable!
+#to be changed when running with filters!
+filtOpts=tkeBudget_consts.filter_options
+filter_global = None
+
+def alloc_filter(filterInit_opts, otherKwArgDict={}):
+    """construct the filter object according to specs in filtOpts."""
+    print('initialising filter according to following filter options:')
+    print('\t', filterInit_opts, '\n')
+    filtOpts['filtInit_Opts'] = filterInit_opts
+    filtOpts['filter_switch'] = True
+    otherKwArgKeys=list(otherKwArgDict.keys())
+    for key in otherKwArgKeys:
+        filtOpts[key].update({key: otherKwArgDict[key]})
+    filter_global = filt.Filter(**filterInit_opts)
+
+def dealloc_filter():
+    """reset global filter and options to default value, turn off the filter switch"""
+    filter_global = None
+    filtOpts=tkeBudget_consts.filter_options
 
 def __checkAllNaN(DA, name):
     NaNCount=np.count_nonzero(np.isnan(DA.values))
@@ -208,6 +231,8 @@ def resol(A):
     return np.mean(A)
 
 def resol_DA(DA, broadcast=True):
+    if filtOpts["filter_switch"] == True:
+        return sf.filtered_field_calc(DA, filtOpts, filter_global)[0]
     if not broadcast:
         return DA.mean(dim=['x_p','y_p'])
     else:
